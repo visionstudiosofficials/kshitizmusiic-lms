@@ -1,14 +1,23 @@
 require('dotenv').config();
-import express from 'express';
-import supabase from './supabaseClient.js';
+const express = require('express');
+console.log('MONGO_URI:', process.env.MONGO_URI);
+const connectDB = require('./db');
 
 const app = express();
 app.use(express.json());
 
-app.get('/', async (req, res) => {
+console.log('🔹 server.js started'); // <-- Add this line
+
+// Connect to MongoDB
+connectDB();
+
+// Example API Route
+app.get('/', (req, res) => {
   res.send('Backend running ✅');
 });
 
-app.listen(process.env.PORT || 5000, () => {
-  console.log(`Server running on port ${process.env.PORT || 5000}`);
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
